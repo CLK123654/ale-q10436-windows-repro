@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "result": "PASS",
+  "scanned_sources": 160,
+  "violations": [],
+  "candidate_score_answer_leakage": [],
+  "input_answer_control_hits": [],
+  "answer_sheets": [
+    "交付物答案清单",
+    "固定字段答案",
+    "固定集合答案",
+    "固定数值答案",
+    "允许变体答案"
+  ],
+  "specification_sheets": [
+    "任务规格转化"
+  ],
+  "task_spec_row_count": 16,
+  "task_spec_column_count": 2,
+  "task_asset_id": "playwright_course_video_caption_keyboard",
+  "task_asset_id_valid": true,
+  "main_software_consistency": {
+    "task_fields": "Playwright",
+    "task_specification": "Playwright",
+    "title_mentions_playwright": true,
+    "prompt_mentions_playwright": true,
+    "environment_mentions_playwright": true,
+    "work_record_mentions_playwright": true
+  },
+  "forbidden_spec_labels": [],
+  "declared_delivery_paths": [
+    "output/playwright.config.ts",
+    "output/tests/video_player_controls.spec.ts",
+    "output/reports/player_state_matrix.csv",
+    "output/reports/shortcut_assertions.csv",
+    "output/reports/persistence_checks.csv",
+    "output/reports/accessibility_contract.csv"
+  ],
+  "reference_paths": [
+    "output/playwright.config.ts",
+    "output/reports/accessibility_contract.csv",
+    "output/reports/persistence_checks.csv",
+    "output/reports/player_state_matrix.csv",
+    "output/reports/shortcut_assertions.csv",
+    "output/tests/video_player_controls.spec.ts"
+  ],
+  "undeclared_reference_paths": [],
+  "empty_delivery_paths": [],
+  "forbidden_input_token_hits": [],
+  "candidate_validation_artifact_present": false,
+  "humanizer_score": 47,
+  "online_ai_detector_used_as_conclusion": false
+}

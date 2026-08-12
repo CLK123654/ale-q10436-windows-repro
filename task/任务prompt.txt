@@ -1,0 +1,22 @@
+某培训平台准备发布新版课程视频播放器。现有页面已提供字幕菜单、倍速按钮、播放状态、时间码和静音控制，但浏览器回归尚未完成。请使用Playwright1.62.x和Chromium补齐测试，并根据页面中的真实结果整理发布记录。
+
+输入数据包包含课程播放器页面、字幕数据、业务场景、静态服务脚本、待完成的Playwright配置和测试文件。请先阅读README.md、fixtures/player_cases.json及fixtures/caption_tracks.json，再完成以下工作：
+
+1.配置Chromium项目和本地静态服务，端口由入口脚本分配，测试只能访问本机页面。
+2.逐项读取player_cases.json。每项场景使用新的浏览器上下文，进入页面后清空localStorage并刷新，再按kind执行相应操作。
+3.字幕场景通过可访问角色选择目标语言，核对字幕文字、选中状态和captionLang；刷新页面后继续核对页面状态。
+4.倍速场景操作页面按钮，核对playbackRate和按钮文字；刷新页面后继续核对播放器倍速。
+5.键盘场景先聚焦播放器，再按输入顺序发送按键，记录播放状态、时间码、静音状态、字幕语言和焦点状态。
+6.可访问性场景使用角色、可访问名称及ARIA属性定位控件，整理字幕菜单、状态区域、静音按钮和播放器焦点的观察结果。
+7.报告内容必须来自本次浏览器操作。不得修改app或fixtures中的输入文件，也不得把scenario_id写成分支条件。
+
+请在输入数据包同级的output目录提交以下文件：
+
+- playwright.config.ts
+- tests/video_player_controls.spec.ts
+- reports/player_state_matrix.csv
+- reports/shortcut_assertions.csv
+- reports/persistence_checks.csv
+- reports/accessibility_contract.csv
+
+运行方式为在input_data目录执行npm run process。入口正常结束且上述文件均可打开时视为完成。

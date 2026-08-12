@@ -1,0 +1,5 @@
+# 课程视频播放器的Playwright字幕与键盘回归
+
+本仓库保存任务正文、四份附件及Windows环境下的独立检查程序。主软件为Playwright1.62.x与Chromium。
+
+候选材料位于task和artifacts目录。verification与qa目录只保存仓库检查材料，不属于任务交付要求。

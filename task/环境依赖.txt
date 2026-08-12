@@ -1,0 +1,1 @@
+系统为原生WindowsServer2025。主软件为Playwright1.62.x，浏览器为随锁文件安装的Chromium。运行时使用Node.js24LTS和PowerShell7。任务只需回环网络，不访问外部业务站点。输入路径及临时工作路径可能含中文和空格，脚本应使用Node.js路径接口处理文件位置。
