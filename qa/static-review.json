@@ -9,13 +9,13 @@
     "required_labels": [
       "检查项：",
       "检查项内容：",
-      "标准答案：",
-      "关键字段：",
-      "容差：",
+      "标准答案或判定规则：",
+      "关键字段或路径：",
+      "容差及来源：",
       "失败边界：",
-      "可观察证据：",
+      "可观察证据及定位方式：",
       "客观硬性标准：",
-      "阈值：",
+      "通过阈值：",
       "优先级：",
       "所属层级："
     ],
@@ -30,7 +30,7 @@
       {
         "index": 2,
         "missing_labels": [],
-        "priority": "Gate项",
+        "priority": "高权重项",
         "level": "L3",
         "gate_reason_valid": true
       },
@@ -70,7 +70,7 @@
         "gate_reason_valid": true
       }
     ],
-    "gate_count": 2,
+    "gate_count": 1,
     "gate_upper_bound": 2,
     "valid": true
   },
@@ -118,6 +118,6 @@
   "empty_delivery_paths": [],
   "forbidden_input_token_hits": [],
   "candidate_validation_artifact_present": false,
-  "humanizer_score": 47,
+  "humanizer_score": 48,
   "online_ai_detector_used_as_conclusion": false
 }

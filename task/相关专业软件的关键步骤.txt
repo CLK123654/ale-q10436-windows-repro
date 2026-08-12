@@ -1,6 +1,6 @@
-1.在input_data目录执行npm ci，根据锁文件安装Playwright依赖，再执行npx playwright install chromium安装浏览器。
-2.完成starter/playwright.config.ts，使Chromium项目、baseURL和webServer共用入口提供的回环端口。
-3.完成starter/tests/video_player_controls.spec.ts，从fixtures读取场景和字幕数据。
-4.使用browser.newContext创建场景上下文，通过getByRole、getByTestId及press操作真实页面。
-5.把浏览器观察值整理到四份CSV报告，由入口复制完成版配置与测试文件。
-6.在input_data目录执行npm run process，查看退出码并检查output目录。
+1.补充starter/playwright.config.ts，让Chromium项目、baseURL和webServer共用入口提供的回环端口。
+2.在starter/tests/video_player_controls.spec.ts读取业务场景与字幕数据，为各场景建立不互相污染的浏览器状态。
+3.使用getByRole、getByTestId和press操作字幕、倍速、播放器焦点与键盘控制，直接观察页面变化。
+4.刷新字幕与倍速场景，比较页面、ARIA属性及localStorage中的保留状态。
+5.把播放器状态、快捷键、持久化和可访问属性整理为四份CSV报告，同时保留完成版配置与测试文件。
+6.在input_data目录执行npm run process，根据退出状态和output目录内容确认交付是否生成。

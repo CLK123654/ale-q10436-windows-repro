@@ -1,22 +1,9 @@
-某培训平台准备发布新版课程视频播放器。现有页面已提供字幕菜单、倍速按钮、播放状态、时间码和静音控制，但浏览器回归尚未完成。请使用Playwright1.62.x和Chromium补齐测试，并根据页面中的真实结果整理发布记录。
+某培训平台准备发布新版课程视频播放器。现有页面已提供字幕菜单、倍速按钮、播放状态、时间码和静音控制，发布负责人需要一份来自真实浏览器的回归记录，确认这些交互没有被本次改版破坏。请使用Playwright1.62.x和Chromium完成测试。
 
-输入数据包包含课程播放器页面、字幕数据、业务场景、静态服务脚本、待完成的Playwright配置和测试文件。请先阅读README.md、fixtures/player_cases.json及fixtures/caption_tracks.json，再完成以下工作：
+输入数据包内有播放器页面、字幕数据、业务场景、静态服务脚本以及待补充的Playwright配置和测试文件。请阅读README.md、fixtures/player_cases.json和fixtures/caption_tracks.json。测试需逐项消费业务场景，隔离各场景的浏览器存储状态，并让配置中的回环地址与入口分配的端口一致。
 
-1.配置Chromium项目和本地静态服务，端口由入口脚本分配，测试只能访问本机页面。
-2.逐项读取player_cases.json。每项场景使用新的浏览器上下文，进入页面后清空localStorage并刷新，再按kind执行相应操作。
-3.字幕场景通过可访问角色选择目标语言，核对字幕文字、选中状态和captionLang；刷新页面后继续核对页面状态。
-4.倍速场景操作页面按钮，核对playbackRate和按钮文字；刷新页面后继续核对播放器倍速。
-5.键盘场景先聚焦播放器，再按输入顺序发送按键，记录播放状态、时间码、静音状态、字幕语言和焦点状态。
-6.可访问性场景使用角色、可访问名称及ARIA属性定位控件，整理字幕菜单、状态区域、静音按钮和播放器焦点的观察结果。
-7.报告内容必须来自本次浏览器操作。不得修改app或fixtures中的输入文件，也不得把scenario_id写成分支条件。
+字幕场景要通过页面控件切换语言，核对文字、选中属性和captionLang，刷新后再次观察。倍速场景操作倍速按钮，核对playbackRate和按钮文字是否在刷新后保留。键盘场景从播放器获得焦点后按输入顺序发送按键，记录播放状态、时间码、静音、字幕语言及焦点状态。可访问性场景按输入中的检查项观察字幕菜单、状态区域、静音按钮和播放器焦点。
 
-请在输入数据包同级的output目录提交以下文件：
+请把本次浏览器操作得到的记录整理到输入数据包同级的output目录，交付playwright.config.ts、tests/video_player_controls.spec.ts、reports/player_state_matrix.csv、reports/shortcut_assertions.csv、reports/persistence_checks.csv和reports/accessibility_contract.csv。不要修改app或fixtures中的开工材料。
 
-- playwright.config.ts
-- tests/video_player_controls.spec.ts
-- reports/player_state_matrix.csv
-- reports/shortcut_assertions.csv
-- reports/persistence_checks.csv
-- reports/accessibility_contract.csv
-
-运行方式为在input_data目录执行npm run process。入口正常结束且上述文件均可打开时视为完成。
+在input_data目录执行npm run process。入口正常结束，配置、测试和四份报告均可打开，且报告能够按业务场景回查输入与页面状态，即可交给发布负责人复核。
