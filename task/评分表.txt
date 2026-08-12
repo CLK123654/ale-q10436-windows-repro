@@ -1,30 +1,83 @@
-1.输入使用与保护（15分）
-- 从player_cases.json读取场景类型、页面路由、目标状态和按键顺序，字段使用完整得8分。
-- 从caption_tracks.json读取字幕语言、可见文字和菜单标签，且app与fixtures保持不变得7分。
+检查项：交付目录与运行入口
+检查项内容：检查题面声明的配置、播放器用例和四份业务报告，并确认入口能调用Playwright完成处理。
+标准答案：完成版配置和用例位于题面指定路径，四份CSV均可解析；npm run process调用Playwright和Chromium后正常结束。
+关键字段：题面声明的output相对路径；进程退出状态；CSV表头；Playwright项目名和webServer。
+容差：相对路径逐字比较；CSV允许必要引号以及LF或CRLF行尾；测试代码组织可以等价调整。
+失败边界：核心交付缺失或不可读、入口非零结束、没有启动真实Chromium，或业务报告并非本次页面操作所得。
+可观察证据：交付文件清单、Playwright进程记录、Chromium项目、入口退出状态和四份CSV结构。
+客观硬性标准：题面声明的核心文件均可读，入口返回0，Playwright实际启动Chromium并生成业务报告。
+阈值：三项硬标准全部满足。
+优先级：Gate项
+所属层级：L8运行验证或可执行行为层
 
-2.Playwright工程与浏览器链路（15分）
-- Chromium项目、baseURL和webServer使用同一回环端口，测试目录指向完成版用例得6分。
-- 每项场景建立新的浏览器上下文，清空localStorage后进入业务操作得5分。
-- 页面访问限于本机，浏览器上下文能正常关闭得4分。
+检查项：场景输入与上下文隔离
+检查项内容：从两份fixtures读取场景、字幕和按键数据，并为每项场景建立独立的浏览器上下文。
+标准答案：场景类型、页面路由、目标状态和按键顺序来自player_cases.json；字幕语言、菜单标签和显示文字来自caption_tracks.json；每项场景进入业务操作前清空localStorage并刷新页面。
+关键字段：kind、start_route、target_lang、target_rate、keys、lang、label；browser.newContext；localStorage.clear；page.reload。
+容差：场景遍历顺序可以不同；字段名称和输入值按当前fixtures比较；上下文辅助函数可以等价拆分。
+失败边界：遗漏任一业务场景、使用代码内预制场景替代fixtures、不同场景共享localStorage，或输入文件被改写。
+可观察证据：两份fixtures、完成版用例、浏览器上下文创建记录和输入文件对照。
+客观硬性标准：全部输入场景均被处理，页面文字和动作参数可回指fixtures，场景之间没有存储污染。
+阈值：全部业务场景满足字段来源与隔离要求。
+优先级：Gate项
+所属层级：L3输入数据导入与完整性层
 
-3.字幕与倍速（18分）
-- 字幕选择使用可访问角色或等价稳定定位器，检查文字、选中属性和captionLang得9分。
-- 倍速操作检查页面按钮、playbackRate和刷新后的页面状态得9分。
+检查项：字幕切换与刷新保留
+检查项内容：操作字幕菜单，检查目标字幕、选中状态和浏览器存储，并在刷新后核对页面状态。
+标准答案：测试通过可访问角色或等价稳定属性选择target_lang对应选项；字幕文字取当前页面与字幕数据，aria-selected和captionLang与选择结果一致；刷新后仍显示同一字幕状态。
+关键字段：target_lang、expected_caption_text、lang、label、captionLang、aria-selected、visible_text、after_reload_value。
+容差：定位器可以使用角色、可访问名称或稳定属性；文本和语言代码逐字比较；报告行按scenario_id和step_no关联，物理行序不计分。
+失败边界：按视觉坐标选择字幕、字幕文字与输入不符、选中属性或存储值错误，或刷新后状态丢失。
+可观察证据：字幕fixtures、播放器DOM、player_state_matrix.csv和persistence_checks.csv按业务主键连接后的记录。
+客观硬性标准：选择后的文字、ARIA属性、存储值和刷新后页面状态均能由当前输入和浏览器观察复算。
+阈值：字幕场景的动作前后及刷新状态全部一致。
+优先级：高权重项
+所属层级：L6领域计算与专业规则层
 
-4.键盘控制（17分）
-- 操作前聚焦播放器，并按输入顺序发送按键得6分。
-- 检查播放状态、时间码、静音属性、字幕语言和焦点保留得7分。
-- shortcut_assertions.csv能按业务主键回查每次按键与观察结果得4分。
+检查项：倍速操作与页面记忆
+检查项内容：操作播放器倍速控件，核对播放倍速、按钮文字和刷新后的页面状态。
+标准答案：测试按target_rate操作页面按钮，playbackRate和按钮文字采用当前场景声明值；刷新后页面继续反映该倍速。
+关键字段：target_rate、expected_button_text、expected_storage、playbackRate、visible_text、after_action_value、after_reload_value。
+容差：倍速按输入数值精确比较；按钮文字逐字比较；报告按scenario_id和步骤关联，行序不计分。
+失败边界：倍速未通过页面控件改变、页面和存储值冲突、按钮文字错误，或刷新后恢复为其它倍速。
+可观察证据：player_cases.json、倍速按钮、localStorage、player_state_matrix.csv和persistence_checks.csv。
+客观硬性标准：操作后的页面、存储和刷新状态相互一致，且均可回指target_rate。
+阈值：倍速场景的页面值、存储值和刷新状态全部满足。
+优先级：高权重项
+所属层级：L6领域计算与专业规则层
 
-5.可访问性检查（12分）
-- 使用角色、可访问名称或ARIA属性定位字幕菜单、状态区域、静音按钮和播放器得7分。
-- accessibility_contract.csv记录检查键、观察数量、属性依据和结果得5分。
+检查项：键盘控制与焦点状态
+检查项内容：聚焦播放器后按输入顺序发送键盘事件，并记录每次操作后的页面状态。
+标准答案：完成版用例读取keys并依次使用press操作播放器；每步记录按键、前置状态、时间码、播放状态、静音属性、字幕状态和焦点保留情况。
+关键字段：keys、key_sequence、precondition、observed_time、observed_status、focus_retained、aria_evidence、current_time、muted、caption_lang。
+容差：按键顺序遵守输入数组；布尔值和状态枚举精确比较；时间码按页面显示的整秒比较。
+失败边界：未聚焦播放器、跳过或重排按键、用脚本直接写页面状态，或报告无法按场景和按键步骤回查浏览器结果。
+可观察证据：player_cases.json的keys、播放器焦点、Playwright按键调用、shortcut_assertions.csv和player_state_matrix.csv。
+客观硬性标准：每个输入按键都有一次浏览器动作和对应观察记录，焦点、时间、静音与字幕字段相互闭合。
+阈值：全部输入按键满足动作、顺序和状态记录要求。
+优先级：高权重项
+所属层级：L8运行验证或可执行行为层
 
-6.结构化报告（15分）
-- player_state_matrix.csv包含场景主键、步骤、动作、可见文字、倍速、字幕、时间码、静音状态和存储观察得5分。
-- persistence_checks.csv包含场景主键、存储键、操作前后值、刷新后值和刷新后页面状态得5分。
-- 各报告主键唯一，记录能从场景输入与浏览器状态回查，数值按输入规则复算得5分。
+检查项：可访问属性观察
+检查项内容：按输入声明的检查键核对字幕菜单、选项、状态区域、静音按钮和播放器焦点属性。
+标准答案：测试使用角色、可访问名称或ARIA属性定位控件；每项required_checks均有检查记录，观察数量和属性依据来自真实DOM。
+关键字段：required_checks、check_id、locator_kind、expected_count、observed_count、evidence、result、aria-selected、aria-pressed、tabindex。
+容差：检查记录按check_id无序比较；定位器实现可以等价替换；观察数量为整数且容差为0。
+失败边界：检查键遗漏或重复、使用静态常量代替DOM观察、角色或属性与页面不符，或结果字段和观察值冲突。
+可观察证据：player_cases.json、播放器DOM、Playwright定位器断言和accessibility_contract.csv。
+客观硬性标准：每个输入检查键可定位到页面控件，观察数量与属性证据可由DOM复核，结果与观察一致。
+阈值：required_checks中的每项均有唯一且正确的观察记录。
+优先级：高权重项
+所属层级：L7产物结构或Schema或专业对象层
 
-7.交付完整性（8分）
-- 完成版配置、测试和四份CSV均位于规定路径得5分。
-- npm run process正常结束，交付文件可读且输入文件未被改动得3分。
+检查项：四份报告的主键与交接一致性
+检查项内容：检查播放器状态、快捷键、持久化和可访问性报告的字段、业务主键及跨报告关系。
+标准答案：各报告使用题面声明的字段；播放器状态按scenario_id和step_no唯一，快捷键按场景与按键步骤回查，持久化记录连接相应场景，可访问性记录连接required_checks。
+关键字段：scenario_id、step_no、state_id、shortcut_id、check_id、storage_key、key_sequence及四份报告的全部业务列。
+容差：CSV允许必要转义与两种常见行尾；没有业务顺序要求的记录按主键无序比较；数值与布尔字段采用上游评分项的容差。
+失败边界：字段缺失或多余、业务主键重复、报告之间的场景身份冲突、记录无法回到输入和DOM，或四份报告互相矛盾。
+可观察证据：四份CSV、两份fixtures以及按scenario_id、步骤或check_id建立的连接结果。
+客观硬性标准：各报告主键唯一，全部记录可回指当前输入和浏览器观察，跨报告共有字段语义一致。
+阈值：四份报告均通过字段、主键、来源和跨报告一致性检查。
+优先级：普通项
+所属层级：L9跨产物一致性与可追溯层

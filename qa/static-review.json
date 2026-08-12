@@ -4,6 +4,76 @@
   "scanned_sources": 160,
   "violations": [],
   "candidate_score_answer_leakage": [],
+  "rubric_contract": {
+    "item_count": 7,
+    "required_labels": [
+      "检查项：",
+      "检查项内容：",
+      "标准答案：",
+      "关键字段：",
+      "容差：",
+      "失败边界：",
+      "可观察证据：",
+      "客观硬性标准：",
+      "阈值：",
+      "优先级：",
+      "所属层级："
+    ],
+    "items": [
+      {
+        "index": 1,
+        "missing_labels": [],
+        "priority": "Gate项",
+        "level": "L8",
+        "gate_reason_valid": true
+      },
+      {
+        "index": 2,
+        "missing_labels": [],
+        "priority": "Gate项",
+        "level": "L3",
+        "gate_reason_valid": true
+      },
+      {
+        "index": 3,
+        "missing_labels": [],
+        "priority": "高权重项",
+        "level": "L6",
+        "gate_reason_valid": true
+      },
+      {
+        "index": 4,
+        "missing_labels": [],
+        "priority": "高权重项",
+        "level": "L6",
+        "gate_reason_valid": true
+      },
+      {
+        "index": 5,
+        "missing_labels": [],
+        "priority": "高权重项",
+        "level": "L8",
+        "gate_reason_valid": true
+      },
+      {
+        "index": 6,
+        "missing_labels": [],
+        "priority": "高权重项",
+        "level": "L7",
+        "gate_reason_valid": true
+      },
+      {
+        "index": 7,
+        "missing_labels": [],
+        "priority": "普通项",
+        "level": "L9",
+        "gate_reason_valid": true
+      }
+    ],
+    "gate_count": 2,
+    "gate_upper_bound": 2,
+    "valid": true
+  },
   "input_answer_control_hits": [],
   "answer_sheets": [
     "交付物答案清单",
