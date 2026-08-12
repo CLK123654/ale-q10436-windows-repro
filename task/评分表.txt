@@ -1,5 +1,7 @@
-检查项：交付目录与运行入口
-检查项内容：检查题面声明的配置、播放器用例和四份业务报告，并确认入口能调用Playwright完成处理。
+总分100分
+
+1. 交付目录与运行入口
+分值：16分
 标准答案或判定规则：完成版配置和用例位于题面指定路径，四份CSV均可解析；npm run process调用Playwright和Chromium后正常结束。
 关键字段或路径：题面声明的output相对路径；进程退出状态；CSV表头；Playwright项目名和webServer。
 容差及来源：相对路径按题面逐字比较；CSV允许必要引号以及LF或CRLF行尾；测试代码组织按允许变体答案比较。
@@ -10,8 +12,8 @@
 优先级：Gate项
 所属层级：L8运行验证或可执行行为层
 
-检查项：场景输入与状态隔离
-检查项内容：检查测试是否消费两份fixtures中的场景、字幕和按键数据，并避免前一场景的存储状态影响后一场景。
+2. 场景输入与状态隔离
+分值：13分
 标准答案或判定规则：场景类型、页面路由、目标状态和按键顺序来自player_cases.json；字幕语言、菜单标签和显示文字来自caption_tracks.json；各场景开始时不继承上一场景留下的业务状态。
 关键字段或路径：fixtures/player_cases.json中的kind、start_route、target_lang、target_rate和keys；fixtures/caption_tracks.json中的lang、label及字幕字段；每项场景的初始页面状态。
 容差及来源：场景遍历顺序可以不同；字段和值按当前fixtures比较；上下文、页面或存储的隔离方式不作限定。
@@ -22,8 +24,8 @@
 优先级：高权重项
 所属层级：L3输入数据导入与完整性层
 
-检查项：字幕切换与刷新保留
-检查项内容：操作字幕菜单，检查目标字幕、选中状态和浏览器存储，并在刷新后核对页面状态。
+3. 字幕切换与刷新保留
+分值：17分
 标准答案或判定规则：测试通过可访问角色或等价稳定属性选择target_lang对应选项；字幕文字取当前页面与字幕数据，aria-selected和captionLang与选择结果一致；刷新后仍显示同一字幕状态。
 关键字段或路径：fixtures/player_cases.json中的target_lang和expected_caption_text；fixtures/caption_tracks.json中的lang、label及字幕字段；报告中的scenario_id、step_no、visible_text、caption_lang和after_reload_value。
 容差及来源：定位器可以使用角色、可访问名称或稳定属性；文本和语言代码按输入逐字比较；报告按scenario_id和step_no关联，物理行序不计分。
@@ -34,8 +36,8 @@
 优先级：高权重项
 所属层级：L6领域计算与专业规则层
 
-检查项：倍速操作与页面记忆
-检查项内容：操作播放器倍速控件，核对播放倍速、按钮文字和刷新后的页面状态。
+4. 倍速操作与页面记忆
+分值：13分
 标准答案或判定规则：测试按target_rate操作页面按钮，playbackRate和按钮文字采用当前场景声明值；刷新后页面继续反映该倍速。
 关键字段或路径：fixtures/player_cases.json中的target_rate、expected_button_text和expected_storage；player_state_matrix.csv与persistence_checks.csv中的对应业务字段。
 容差及来源：倍速按输入数值精确比较；按钮文字按输入逐字比较；报告按scenario_id和步骤关联，行序不计分。
@@ -46,8 +48,8 @@
 优先级：高权重项
 所属层级：L6领域计算与专业规则层
 
-检查项：键盘控制与焦点状态
-检查项内容：聚焦播放器后按输入顺序发送键盘事件，并记录每次操作后的页面状态。
+5. 键盘控制与焦点状态
+分值：18分
 标准答案或判定规则：完成版用例读取keys并依次通过Playwright向播放器发送按键；每步记录按键、前置状态、时间码、播放状态、静音属性、字幕状态和焦点保留情况。
 关键字段或路径：fixtures/player_cases.json中的keys；shortcut_assertions.csv与player_state_matrix.csv中的key_sequence、precondition、observed_time、observed_status、focus_retained、aria_evidence、current_time、muted和caption_lang。
 容差及来源：按键顺序按输入数组比较；布尔值和状态枚举精确比较；时间码以页面显示的整秒为准。
@@ -58,8 +60,8 @@
 优先级：高权重项
 所属层级：L8运行验证或可执行行为层
 
-检查项：可访问属性观察
-检查项内容：按输入声明的检查键核对字幕菜单、选项、状态区域、静音按钮和播放器焦点属性。
+6. 可访问属性观察
+分值：13分
 标准答案或判定规则：测试使用角色、可访问名称或ARIA属性定位控件；每项required_checks均有检查记录，观察数量和属性依据来自真实DOM。
 关键字段或路径：fixtures/player_cases.json中的required_checks；accessibility_contract.csv中的check_id、locator_kind、expected_count、observed_count、evidence和result；页面中的aria-selected、aria-pressed与tabindex。
 容差及来源：检查记录按check_id无序比较；定位器实现可以等价替换；观察数量来自Playwright定位器计数，容差为0。
@@ -70,8 +72,8 @@
 优先级：高权重项
 所属层级：L7产物结构或Schema或专业对象层
 
-检查项：四份报告的主键与交接一致性
-检查项内容：检查播放器状态、快捷键、持久化和可访问性报告的字段、业务主键及跨报告关系。
+7. 四份报告的主键与交接一致性
+分值：10分
 标准答案或判定规则：各报告使用题面声明的字段；播放器状态按scenario_id和step_no唯一，快捷键按场景与按键步骤回查，持久化记录连接相应场景，可访问性记录连接required_checks。
 关键字段或路径：四份reports目录CSV中的scenario_id、step_no、state_id、shortcut_id、check_id、storage_key、key_sequence及各自业务列。
 容差及来源：CSV允许必要转义与LF或CRLF行尾；没有业务顺序要求的记录按主键无序比较；数值与布尔字段采用对应业务评分项的容差。
